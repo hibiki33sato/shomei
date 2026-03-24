@@ -19,7 +19,7 @@ ja:
   print_title: "存続を求める署名一覧"
   col_name: "お名前（漢字）"
   col_message: "応援メッセージ・お気持ち"
-  col_sign: "署名"
+
   col_date: "日付"
   footer_privacy: "ご記入いただいた情報は、お店の存続交渉のためのみに使用し、第三者への提供は一切行いません。"
   lang_switch: "English"
