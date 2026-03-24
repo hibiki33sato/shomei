@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存続を願う署名・メッセージフォーム</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f0;
+    --warm-white: #fffdf9;
+    --ink: #1a1208;
+    --brown: #5c3d1e;
+    --gold: #c9973a;
+    --gold-light: #e8c577;
+    --rust: #9b4520;
+    --muted: #7a6a55;
+    --border: #d4c4a8;
+    --shadow: rgba(92, 61, 30, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    body { background: white; }
+    .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+    .container { max-width: 100%; padding: 0; }
+    .sheet { box-shadow: none; border: 1px solid #ccc; margin-bottom: 0; }
+    .submit-area { display: none; }
+  }
+
+  /* ===== LAYOUT ===== */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ===== DECORATIVE HEADER ===== */
+  .header-wrap {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .ornament-symbol {
+    font-size: 22px;
+    color: var(--gold);
+  }
+
+  .header-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .header-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== APPEAL SECTION ===== */
+  .appeal-box {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .appeal-box::before {
+    content: '❝';
+    font-family: Georgia, serif;
+    font-size: 48px;
+    color: var(--gold-light);
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .appeal-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    line-height: 2.2;
+    color: var(--ink);
+    padding-left: 24px;
+  }
+
+  .appeal-text strong {
+    color: var(--rust);
+  }
+
+  /* ===== SHEET ===== */
+  .sheet {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 24px var(--shadow);
+  }
+
+  .sheet-header {
+    background: linear-gradient(135deg, var(--brown) 0%, #7a4f28 100%);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sheet-title {
+    font-family: 'Noto Serif JP', serif;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .sheet-number {
+    font-size: 12px;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== FORM FIELDS ===== */
+  .entry {
+    border-bottom: 1px solid #ece4d6;
+    padding: 20px 28px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    align-items: start;
+    transition: background 0.2s;
+  }
+
+  .entry:hover {
+    background: #fdf9f3;
+  }
+
+  .entry:last-child {
+    border-bottom: none;
+  }
+
+  .entry-num {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .num-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .field-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 6px 2px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field-input:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .field-input::placeholder {
+    color: #c8b89a;
+    font-size: 13px;
+  }
+
+  textarea.field-input {
+    resize: vertical;
+    min-height: 60px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    line-height: 1.8;
+  }
+
+  textarea.field-input:focus {
+    border-color: var(--gold);
+  }
+
+  /* Message entry special layout */
+  .entry.message-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .message-entry .entry-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  /* ===== PRINT TABLE ===== */
+  .print-sheet {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px var(--shadow);
+  }
+
+  .print-sheet-header {
+    background: var(--brown);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .print-sheet-header .sheet-title { color: white; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: #f5ede0;
+  }
+
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--brown);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 14px;
+    border-bottom: 1px solid #ece4d6;
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .td-num {
+    width: 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .td-name { width: 130px; }
+  .td-yomi { width: 130px; }
+  .td-sign { width: 100px; }
+  .td-msg { }
+  .td-date { width: 80px; }
+
+  /* ===== FOOTER NOTE ===== */
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 2;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  /* ===== SUBMIT BUTTON ===== */
+  .submit-area {
+    text-align: center;
+    margin: 32px 0;
+  }
+
+  .btn-print {
+    background: var(--brown);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 6px;
+  }
+
+  .btn-print:hover { background: var(--rust); }
+
+  .btn-clear {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 13px 28px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 6px;
+  }
+
+  .btn-clear:hover { border-color: var(--rust); color: var(--rust); }
+
+  /* ===== SECTION DIVIDER ===== */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0 24px;
+  }
+
+  .section-divider span {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: var(--brown);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header-wrap">
+    <div class="header-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="header-label">存続支援署名フォーム</div>
+    <h1 class="header-title">BALANCEとあげ太郎を、未来につなげたい</h1>
+    <p class="header-sub">
+      このフォームへのご記入は、お店の存続を求める声として大切に活用させていただきます。<br>
+      お名前・ご署名・応援メッセージをお書きいただけますと幸いです。
+    </p>
+    <div class="header-ornament" style="margin-top:20px;">
+      <div class="ornament-line"></div>
+      <div class="ornament-symbol" style="font-size:14px;">◆</div>
+      <div class="ornament-line"></div>
+    </div>
+  </div>
+
+  <!-- APPEAL SECTION -->
+  <div class="appeal-box no-print">
+    <p class="appeal-text">
+      長年愛用いただいた<strong>BALANCEとあげ太郎</strong>が<strong>立ち退きの危機</strong>に直面しています。<br>
+      地域に愛され、大切にしてきたこのお店を守るため、<br>
+      皆さまの温かいお声をお借りできますよう、心よりお願い申し上げます。
+    </p>
+  </div>
+
+  <!-- ===== DIGITAL FORM ===== -->
+  <div class="section-divider no-print">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <span>デジタル記入フォーム</span>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="sheet no-print">
+    <div class="sheet-header">
+      <div class="sheet-title">署名・応援メッセージ記入欄</div>
+      <div class="sheet-number">SIGNATURE FORM</div>
+    </div>
+
+    <!-- Entry 1: Name -->
+    <div class="entry">
+      <div class="entry-num">
+        <div class="num-badge">1</div>
+        <div class="field-group">
+          <div class="field-label">お名前（漢字）</div>
+          <input class="field-input" type="text" placeholder="山田 花子" style="width:130px;">
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">お名前（ふりがな）</div>
+        <input class="field-input" type="text" placeholder="やまだ はなこ" style="width:160px;">
+      </div>
+    </div>
+
+    <!-- Entry 2: Address -->
+    <div class="entry">
+      <div class="entry-num">
+        <div class="num-badge">2</div>
+        <div class="field-group">
+          <div class="field-label">お住まいの地域（任意）</div>
+          <input class="field-input" type="text" placeholder="例：○○区・○○市" style="width:160px;">
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">メールアドレス（任意）</div>
+        <input class="field-input" type="email" placeholder="example@email.com" style="width:240px;">
+      </div>
+    </div>
+
+    <!-- Entry 3: Message -->
+    <div class="entry message-entry">
+      <div class="message-entry-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="num-badge">3</div>
+        <div class="field-label" style="font-size:12px;">応援メッセージ（自由記述）</div>
+      </div>
+      <textarea class="field-input" rows="3" placeholder="このお店への思い出、存続を望む理由など、自由にお書きください。"></textarea>
+    </div>
+
+  </div>
+
+  <div class="submit-area no-print">
+    <button class="btn-print" onclick="window.print()">🖨 印刷用フォームを開く</button>
+    <button class="btn-clear" onclick="clearForm()">リセット</button>
+  </div>
+
+  <!-- ===== PRINT TABLE FORM ===== -->
+  <div class="section-divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <span>印刷用　署名収集シート</span>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="print-sheet">
+    <div class="print-sheet-header">
+      <div class="sheet-title">存続を求める署名一覧</div>
+      <div class="sheet-number" style="color:var(--gold-light);font-size:12px;">Sheet No. ___</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="td-num">No.</th>
+          <th class="td-name">お名前（漢字）</th>
+          <th class="td-yomi">ふりがな</th>
+          <th class="td-msg">応援メッセージ・お気持ち</th>
+          <th class="td-sign">署名</th>
+          <th class="td-date">日付</th>
+        </tr>
+      </thead>
+      <tbody id="signatureRows">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-note">
+    <p>ご記入いただいた情報は、お店の存続交渉のためのみに使用し、第三者への提供は一切行いません。</p>
+    <p style="margin-top:4px;">Personal information will be used solely for the purpose of this petition.</p>
+    <div class="footer-ornament">
+      <div class="ornament-line" style="max-width:80px;"></div>
+      <span style="color:var(--gold);font-size:14px;">✦</span>
+      <div class="ornament-line" style="max-width:80px;"></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // Generate 15 rows for the print table
+  const tbody = document.getElementById('signatureRows');
+  for (let i = 1; i <= 15; i++) {
+    tbody.innerHTML += `
+      <tr>
+        <td class="td-num" style="color:var(--muted);font-size:12px;">${i}</td>
+        <td class="td-name"></td>
+        <td class="td-yomi"></td>
+        <td class="td-msg"></td>
+        <td class="td-sign"></td>
+        <td class="td-date"></td>
+      </tr>`;
+  }
+
+  function clearForm() {
+    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+  }
+</script>
+
+</body>
+</html>

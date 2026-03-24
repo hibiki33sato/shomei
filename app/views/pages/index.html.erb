@@ -1,0 +1,165 @@
+<% content_for :title, t("site_title") %>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header-wrap">
+    <div class="header-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-symbol">✦</div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="header-label"><%= t("header_label") %></div>
+    <h1 class="header-title"><%= t("header_title") %></h1>
+    <p class="header-sub">
+      <%= t("header_sub").gsub("\n", "<br>").html_safe %>
+    </p>
+    <div class="header-ornament" style="margin-top:20px;">
+      <div class="ornament-line"></div>
+      <div class="ornament-symbol" style="font-size:14px;">◆</div>
+      <div class="ornament-line"></div>
+    </div>
+  </div>
+
+  <!-- APPEAL SECTION -->
+  <div class="appeal-box no-print">
+    <p class="appeal-text"><%= t("appeal_html").html_safe %></p>
+  </div>
+
+  <% if notice %>
+    <div class="no-print" style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:4px;padding:12px 20px;margin-bottom:16px;color:#2e7d32;font-size:13px;">
+      <%= notice %>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="no-print" style="background:#fdecea;border:1px solid #ef9a9a;border-radius:4px;padding:12px 20px;margin-bottom:16px;color:#c62828;font-size:13px;">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <!-- ===== DIGITAL FORM ===== -->
+  <div class="section-divider no-print">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <span><%= t("digital_form") %></span>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <%= form_with model: Signature.new, url: signatures_path, local: true, class: "no-print" do |f| %>
+  <div class="sheet">
+    <div class="sheet-header">
+      <div class="sheet-title"><%= t("form_title") %></div>
+      <div class="sheet-number">SIGNATURE FORM</div>
+    </div>
+
+    <!-- Entry 1: Name -->
+    <div class="entry">
+      <div class="entry-num">
+        <div class="num-badge">1</div>
+        <div class="field-group">
+          <div class="field-label"><%= t("field_name_kanji") %></div>
+          <%= f.text_field :name_kanji, class: "field-input", placeholder: t("field_name_kanji_placeholder"), style: "width:130px;" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 2: Address & Email -->
+    <div class="entry">
+      <div class="entry-num">
+        <div class="num-badge">2</div>
+        <div class="field-group">
+          <div class="field-label"><%= t("field_area") %></div>
+          <%= f.text_field :area, class: "field-input", placeholder: t("field_area_placeholder"), style: "width:160px;" %>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><%= t("field_email") %></div>
+        <%= f.email_field :email, class: "field-input", placeholder: "example@email.com", style: "width:240px;" %>
+      </div>
+    </div>
+
+    <!-- Entry 3: Message -->
+    <div class="entry message-entry">
+      <div class="message-entry-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="num-badge">3</div>
+        <div class="field-label" style="font-size:12px;"><%= t("field_message") %></div>
+      </div>
+      <%= f.text_area :message, class: "field-input", rows: 3, placeholder: t("field_message_placeholder") %>
+    </div>
+
+  </div>
+
+  <div class="submit-area">
+    <%= f.submit t("submit_btn"), class: "btn-print" %>
+    <button type="reset" class="btn-clear"><%= t("reset_btn") %></button>
+  </div>
+  <% end %>
+
+  <!-- ===== PRINT TABLE FORM ===== -->
+  <div class="section-divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <span><%= t("print_section") %></span>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="print-sheet">
+    <div class="print-sheet-header">
+      <div class="sheet-title"><%= t("print_title") %></div>
+      <div class="sheet-number" style="color:var(--gold-light);font-size:12px;">Sheet No. ___</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="td-num">No.</th>
+          <th class="td-name"><%= t("col_name") %></th>
+          <th class="td-msg"><%= t("col_message") %></th>
+          <th class="td-sign"><%= t("col_sign") %></th>
+          <th class="td-date"><%= t("col_date") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @signatures.each.with_index(1) do |s, i| %>
+          <tr>
+            <td class="td-num" style="color:var(--muted);font-size:12px;"><%= i %></td>
+            <td class="td-name"><%= s.name_kanji %></td>
+            <td class="td-msg"><%= s.message %></td>
+            <td class="td-sign"></td>
+            <td class="td-date"><%= s.created_at.strftime("%Y/%m/%d") %></td>
+          </tr>
+        <% end %>
+        <% (@signatures.count...15).each do |i| %>
+          <tr>
+            <td class="td-num" style="color:var(--muted);font-size:12px;"><%= i + 1 %></td>
+            <td class="td-name"></td>
+            <td class="td-msg"></td>
+            <td class="td-sign"></td>
+            <td class="td-date"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-note">
+    <p><%= t("footer_privacy") %></p>
+    <div class="footer-ornament">
+      <div class="ornament-line" style="max-width:80px;"></div>
+      <span style="color:var(--gold);font-size:14px;">✦</span>
+      <div class="ornament-line" style="max-width:80px;"></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  function clearForm() {
+    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+  }
+</script>

@@ -1,0 +1,43 @@
+<% content_for :title, t("admin.title") %>
+
+<div class="container">
+  <div class="header-wrap">
+    <div class="header-label"><%= t("admin.label") %></div>
+    <h1 class="header-title" style="font-size:22px;"><%= t("admin.heading") %></h1>
+  </div>
+
+  <div class="submit-area" style="text-align:right;margin-bottom:16px;">
+    <%= link_to t("admin.export_btn"), export_signatures_path, class: "btn-print", style: "text-decoration:none;", data: { turbo: false } %>
+    <%= link_to t("admin.back_btn"), root_path, class: "btn-clear", style: "text-decoration:none;" %>
+  </div>
+
+  <div class="print-sheet">
+    <div class="print-sheet-header">
+      <div class="sheet-title"><%= t("admin.heading") %>（<%= t("admin.count", count: @signatures.count) %>）</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="td-num">No.</th>
+          <th class="td-name"><%= t("col_name") %></th>
+          <th><%= t("admin.col_area") %></th>
+          <th><%= t("admin.col_email") %></th>
+          <th class="td-msg"><%= t("col_message") %></th>
+          <th class="td-date"><%= t("admin.col_datetime") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @signatures.each.with_index(1) do |s, i| %>
+          <tr>
+            <td class="td-num"><%= i %></td>
+            <td class="td-name"><%= s.name_kanji %></td>
+            <td><%= s.area %></td>
+            <td><%= s.email %></td>
+            <td class="td-msg"><%= s.message %></td>
+            <td class="td-date"><%= s.created_at.strftime("%Y/%m/%d") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
