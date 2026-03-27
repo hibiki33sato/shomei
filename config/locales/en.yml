@@ -19,7 +19,7 @@ en:
   print_title: "Petition Signatures"
   col_name: "Full Name"
   col_message: "Message / Comments"
-  col_sign: "Signature"
+
   col_date: "Date"
   footer_privacy: "Information provided will be used solely for the purpose of this petition and will not be shared with third parties."
   lang_switch: "日本語"
