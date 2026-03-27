@@ -120,7 +120,7 @@
           <th class="td-name"><%= t("col_name") %></th>
           <th class="td-msg"><%= t("col_message") %></th>
 
-          <th class="td-date"><%= t("col_date") %></th>
+          <th class="td-date hide-mobile"><%= t("col_date") %></th>
         </tr>
       </thead>
       <tbody>
@@ -130,7 +130,7 @@
             <td class="td-name"><%= s.name_kanji %></td>
             <td class="td-msg"><%= s.message %></td>
 
-            <td class="td-date"><%= s.created_at.strftime("%Y/%m/%d") %></td>
+            <td class="td-date hide-mobile"><%= s.created_at.strftime("%Y/%m/%d") %></td>
           </tr>
         <% end %>
         <% (@signatures.count...15).each do |i| %>
@@ -139,7 +139,7 @@
             <td class="td-name"></td>
             <td class="td-msg"></td>
 
-            <td class="td-date"></td>
+            <td class="td-date hide-mobile"></td>
           </tr>
         <% end %>
       </tbody>

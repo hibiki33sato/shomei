@@ -307,16 +307,17 @@ tr:last-child td { border-bottom: none; }
   font-size: 12px;
 }
 
-.td-name { width: 130px; }
-.td-yomi { width: 130px; }
-.td-msg { word-break: break-all; min-width: 0; }
+.td-name { width: 100px; }
+.td-msg { word-break: break-word; min-width: 0; }
 .td-date { width: 80px; white-space: nowrap; }
 
 @media (max-width: 600px) {
   .print-sheet { overflow-x: auto; }
   table { font-size: 12px; }
-  .td-name { width: 80px; }
-  .td-num { width: 28px; }
+  .td-name { width: 70px; }
+  .td-num { width: 24px; }
+  .td-date { display: none; }
+  .hide-mobile { display: none; }
   td { padding: 8px 6px; }
 }
 

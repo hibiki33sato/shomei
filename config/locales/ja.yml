@@ -17,7 +17,7 @@ ja:
   reset_btn: "リセット"
   print_section: "印刷用　署名収集シート"
   print_title: "存続を求める署名一覧"
-  col_name: "お名前（漢字）"
+  col_name: "お名前"
   col_message: "応援メッセージ・お気持ち"
 
   col_date: "日付"
