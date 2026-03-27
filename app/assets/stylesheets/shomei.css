@@ -309,8 +309,16 @@ tr:last-child td { border-bottom: none; }
 
 .td-name { width: 130px; }
 .td-yomi { width: 130px; }
+.td-msg { word-break: break-all; min-width: 0; }
+.td-date { width: 80px; white-space: nowrap; }
 
-.td-date { width: 80px; }
+@media (max-width: 600px) {
+  .print-sheet { overflow-x: auto; }
+  table { font-size: 12px; }
+  .td-name { width: 80px; }
+  .td-num { width: 28px; }
+  td { padding: 8px 6px; }
+}
 
 /* ===== FOOTER NOTE ===== */
 .footer-note {
